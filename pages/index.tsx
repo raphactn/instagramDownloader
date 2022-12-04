@@ -62,12 +62,6 @@ export default function Home({ data, error, typeMedia }: any) {
     if (data) {
       setLoadingPage(false);
       setDataPage(data);
-      router.replace({
-        query: {
-          url: null,
-          type: null,
-        },
-      });
     }
   }, [data]);
 
@@ -134,7 +128,7 @@ export default function Home({ data, error, typeMedia }: any) {
         </Tabs>
         <Center mt={50} flexDirection="column" gap={2}>
           {dataPage ? (
-            <SimpleGrid columns={4} spacing={10} mb={10}>
+            <SimpleGrid columns={{base: 1, md: 4}} spacing={10} mb={10}>
               {dataPage?.map((item: string, i: number) => (
                 <Box key={i}>
                   <Flex direction="column">
@@ -160,11 +154,11 @@ export default function Home({ data, error, typeMedia }: any) {
                       onClick={() =>
                         downloadImage(
                           `https://cors-anywhere.herokuapp.com/${item}`,
-                          "fileName.png"
+                          `media.${typeMedia === 'image' ? 'png' : 'mp4'}`
                         )
                       }
                     >
-                      Baixar imagem
+                     {typeMedia === 'image' ? 'Baixar imagem' : 'Baixar video'}
                     </Button>
                   </Flex>
                 </Box>
