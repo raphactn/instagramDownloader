@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer'
+import chromium from "chrome-aws-lambda";
 
 const ListResultsServices = async ({ data, type }: any) => {
 
@@ -6,7 +6,7 @@ const ListResultsServices = async ({ data, type }: any) => {
     let typeMedia = type
     let result = []
 
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await chromium.puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     page.setCacheEnabled(false)
     await page.goto(data as string);
