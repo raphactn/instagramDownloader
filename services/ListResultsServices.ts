@@ -1,5 +1,5 @@
 const ListResultsServices = async ({ data, type }: any) => {
-  let chrome = {};
+  let chrome: any = {};
   let puppeteer;
 
   if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
@@ -12,10 +12,13 @@ const ListResultsServices = async ({ data, type }: any) => {
   }
 
   let browser = await puppeteer.launch({
+    args: [...chrome.args, '--hide-scrollbars', '--disable-web-security'],
+    defaultViewport: chrome.defaultViewport,
+    executablePath: await chrome.executablePath,
     headless: true,
     ignoreHTTPSErrors: true,
   });
-
+  
   let error = false;
   let typeMedia = type;
   let result = [];
