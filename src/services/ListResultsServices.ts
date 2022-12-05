@@ -1,22 +1,31 @@
+let chrome: any = {};
+let puppeteer: any;
+
+if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+  // running on the Vercel platform.
+  chrome = require("chrome-aws-lambda");
+  puppeteer = require("puppeteer-core");
+} else {
+  // running locally.
+  puppeteer = require("puppeteer");
+}
+
 const ListResultsServices = async ({ data, type }: any) => {
-  let chrome: any = {};
-  let puppeteer;
+  let options: any = {
+    headless: true,
+  };
 
   if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
-    // running on the Vercel platform.
-    chrome = require("chrome-aws-lambda");
-    puppeteer = require("puppeteer-core");
-  } else {
-    // running locally.
-    puppeteer = require("puppeteer");
+    options = {
+      args: [...chrome.args, "--hide-scrollbars", "--disable-web-security"],
+      defaultViewport: chrome.defaultViewport,
+      executablePath: await chrome.executablePath,
+      headless: true,
+      ignoreHTTPSErrors: true,
+    };
   }
 
-  let browser = await puppeteer.launch({
-    defaultViewport: chrome.defaultViewport,
-    executablePath: await chrome.executablePath,
-    headless: true,
-    ignoreHTTPSErrors: true,
-  });
+  let browser = await puppeteer.launch(options);
 
   let error = false;
   let typeMedia = type;
