@@ -5,8 +5,8 @@ const ListResultsServices = async ({ data, type }: any) => {
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
 
-  let error = false;
   const typeMedia = type
+  let error = false;
   let result = [];
   let page;
 
