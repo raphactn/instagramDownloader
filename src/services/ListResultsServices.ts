@@ -1,26 +1,32 @@
-let chrome: any = {};
-let puppeteer: any;
-
-chrome = require("chrome-aws-lambda");
-puppeteer = require("puppeteer");
+import puppeteer from "puppeteer";
 
 const ListResultsServices = async ({ data, type }: any) => {
-  const options = {
-    args: [...chrome.args, "--hide-scrollbars", "--disable-web-security"],
-    defaultViewport: chrome.defaultViewport,
-    executablePath: await chrome.executablePath,
+  let browser = await puppeteer.launch({
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
     headless: true,
     ignoreHTTPSErrors: true,
-  };
-
-  let browser = await puppeteer.launch(options);
+  });
 
   let error = false;
   let typeMedia = type;
-  let result = [];
+  let result = [""];
 
   const page = await browser.newPage();
   page.setCacheEnabled(false);
+
+  await page.goto("https://cors-anywhere.herokuapp.com");
+
+  const selector = await page.$(
+    "body > form > p:nth-child(2) > input[type=submit]:nth-child(1)"
+  );
+
+  if (selector !== null) {
+    await page.click(
+      "body > form > p:nth-child(2) > input[type=submit]:nth-child(1)",
+      { delay: 10, clickCount: 2 }
+    );
+  }
+
   await page.goto(data as string);
 
   if (type === "image") {
