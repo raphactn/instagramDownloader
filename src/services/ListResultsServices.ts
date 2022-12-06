@@ -2,7 +2,7 @@ let chrome: any = {};
 let puppeteer: any;
 
 chrome = require("chrome-aws-lambda");
-puppeteer = require("puppeteer-core");
+puppeteer = require("puppeteer");
 
 const ListResultsServices = async ({ data, type }: any) => {
   const options = {
