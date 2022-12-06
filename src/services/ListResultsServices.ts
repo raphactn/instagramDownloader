@@ -1,17 +1,16 @@
-import puppeteer from "puppeteer";
+const puppeteer = require("puppeteer");
 
 const ListResultsServices = async ({ data, type }: any) => {
-  let browser = await puppeteer.launch({
+  const browser = await puppeteer.launch({
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    headless: true,
-    ignoreHTTPSErrors: true,
   });
 
   let error = false;
-  let typeMedia = type;
-  let result = [""];
+  const typeMedia = type
+  let result = [];
+  let page;
 
-  const page = await browser.newPage();
+  page = await browser.newPage();
   page.setCacheEnabled(false);
 
   await page.goto("https://cors-anywhere.herokuapp.com");
