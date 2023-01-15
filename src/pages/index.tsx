@@ -104,7 +104,7 @@ export default function Home({ data, error, typeMedia }: any) {
                   placeholder="Adicione a URL da imagem aqui ou link do perfil"
                   onChange={(e) => setUrl(e.target.value)}
                 />
-                <Button variant={"outline"} onClick={handleGetMedia}>
+                <Button variant={"solid"} onClick={handleGetMedia}>
                   Buscar
                 </Button>
               </Center>
@@ -116,7 +116,7 @@ export default function Home({ data, error, typeMedia }: any) {
                   placeholder="Adicione a URL do video"
                   onChange={(e) => setUrlVideo(e.target.value)}
                 />
-                <Button variant={"outline"} onClick={handleGetMedia}>
+                <Button variant={"solid"} onClick={handleGetMedia}>
                   Buscar
                 </Button>
               </Center>
