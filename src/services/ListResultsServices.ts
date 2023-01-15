@@ -2,7 +2,7 @@ const puppeteer = require("puppeteer");
 
 const ListResultsServices = async ({ data, type }: any) => {
   const browser = await puppeteer.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    args: ["--no-sandbox"],
   });
 
   const typeMedia = type
