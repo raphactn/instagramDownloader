@@ -21,7 +21,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { ListResultsServices } from "../services/ListResultsServices";
 import Nav from "../components/Navbar";
-import { BsCameraVideo, BsImages } from "react-icons/bs";
 
 export default function Home({ data, error, typeMedia }: any) {
   const [url, setUrl] = useState("");
@@ -41,8 +40,8 @@ export default function Home({ data, error, typeMedia }: any) {
           type: url ? "image" : "video",
         },
       });
-      setUrl("")
-      setUrlVideo("")
+      setUrl("");
+      setUrlVideo("");
     }
   };
 
@@ -89,18 +88,14 @@ export default function Home({ data, error, typeMedia }: any) {
       <Container maxW="1000px">
         <Tabs variant="enclosed" mt={10}>
           <TabList justifyContent={"center"}>
-            <Tab>
-              <BsImages fontSize={"30px"} />
-            </Tab>
-            <Tab>
-              <BsCameraVideo fontSize={"30px"} />
-            </Tab>
+            <Tab>Imagem</Tab>
+            <Tab>Video</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
               <Center gap={2}>
                 <Input
-                value={url}
+                  value={url}
                   placeholder="Adicione a URL da imagem aqui ou link do perfil"
                   onChange={(e) => setUrl(e.target.value)}
                 />
@@ -112,7 +107,7 @@ export default function Home({ data, error, typeMedia }: any) {
             <TabPanel>
               <Center gap={2}>
                 <Input
-                value={urlVideo}
+                  value={urlVideo}
                   placeholder="Adicione a URL do video"
                   onChange={(e) => setUrlVideo(e.target.value)}
                 />
@@ -125,7 +120,7 @@ export default function Home({ data, error, typeMedia }: any) {
         </Tabs>
         <Center mt={50} flexDirection="column" gap={2}>
           {dataPage ? (
-            <SimpleGrid columns={{base: 1, md: 4}} spacing={10} mb={10}>
+            <SimpleGrid columns={{ base: 1, md: 4 }} spacing={10} mb={10}>
               {dataPage?.map((item: string, i: number) => (
                 <Box key={i}>
                   <Flex direction="column">
@@ -138,7 +133,11 @@ export default function Home({ data, error, typeMedia }: any) {
                         width={400}
                       />
                     ) : (
-                      <video crossOrigin="anonymous" controls={true} autoPlay={false}>
+                      <video
+                        crossOrigin="anonymous"
+                        controls={true}
+                        autoPlay={false}
+                      >
                         <source
                           src={`https://cors-anywhere.herokuapp.com/${item}`}
                           type="video/mp4"
@@ -151,11 +150,11 @@ export default function Home({ data, error, typeMedia }: any) {
                       onClick={() =>
                         downloadImage(
                           `https://cors-anywhere.herokuapp.com/${item}`,
-                          `media.${typeMedia === 'image' ? 'png' : 'mp4'}`
+                          `media.${typeMedia === "image" ? "png" : "mp4"}`
                         )
                       }
                     >
-                     {typeMedia === 'image' ? 'Baixar imagem' : 'Baixar video'}
+                      {typeMedia === "image" ? "Baixar imagem" : "Baixar video"}
                     </Button>
                   </Flex>
                 </Box>

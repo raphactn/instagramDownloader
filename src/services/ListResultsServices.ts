@@ -3,6 +3,7 @@ const puppeteer = require("puppeteer");
 const ListResultsServices = async ({ data, type }: any) => {
   const browser = await puppeteer.launch({
     args: ["--no-sandbox"],
+    headless: true
   });
 
   const typeMedia = type
