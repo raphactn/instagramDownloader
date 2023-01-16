@@ -26,7 +26,6 @@ export default function Home() {
       api
         .post("/instagramData", {
           body: url,
-          headers: { "Content-Type": "application/json" },
         })
         .then((res) => {
           setLoading(false);
