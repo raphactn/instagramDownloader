@@ -7,6 +7,7 @@ import {
   Container,
   Image,
   Box,
+  Spinner,
 } from "@chakra-ui/react";
 import Head from "next/head";
 import { useState } from "react";
@@ -16,23 +17,27 @@ import api from "./api/main";
 export default function Home() {
   const [url, setUrl] = useState("");
   const [dataPage, setDataPage] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const fetchData = () => {
-    if (!url) {
-      return;
+    setDataPage([]);
+    setLoading(true);
+    if (url) {
+      api
+        .post("/instagramData", {
+          body: url,
+          headers: { "Content-Type": "application/json" },
+        })
+        .then((res) => {
+          setLoading(false);
+          setDataPage(res.data.result);
+          setUrl("");
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
     }
-    api
-      .post("/instagramData", {
-        body: url,
-        headers: { "Content-Type": "application/json" },
-      })
-      .then((res) => {
-        setDataPage(res.data.result);
-        setUrl("")
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   };
 
   const downloadImage = (url: string, name: string) => {
@@ -71,7 +76,11 @@ export default function Home() {
         </Center>
         <Center mt={50} flexDirection="column" gap={2}>
           {dataPage ? (
-            <SimpleGrid columns={{ base: 1, md: 4 }} spacing={10} mb={10}>
+            <SimpleGrid
+              columns={dataPage.length > 4 ? 4 : dataPage.length}
+              spacing={10}
+              mb={10}
+            >
               {dataPage?.map((item: string, i: number) => (
                 <Box key={i}>
                   <Flex direction="column">
@@ -99,6 +108,7 @@ export default function Home() {
               ))}
             </SimpleGrid>
           ) : null}
+          {loading ? <Spinner /> : null}
         </Center>
       </Container>
     </div>
