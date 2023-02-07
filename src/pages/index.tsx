@@ -24,9 +24,7 @@ export default function Home() {
     setLoading(true);
     if (url) {
       api
-        .post("/instagramData", {
-          body: url,
-        })
+        .get("/instagramData", { params: { url } })
         .then((res) => {
           setLoading(false);
           setDataPage(res.data.result);
